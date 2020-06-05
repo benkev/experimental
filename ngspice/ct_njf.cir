@@ -1,0 +1,21 @@
+NJF Curve Tracer
+Vds  1  0  DC  0V
+Vg   0  2  DC  0V
+* Device under test
+J1   1  2  0  njf_transistor  ; Jxxx D G S name
+* Transistor model
+.model njf_transistor NJF (beta=0.14m Vto=-1.2V lambda=0)
+* Vary Vce from 0V to 10V in 0.01V steps
+*.DC  Vds  0V  +10V  10mV
+* For each Vg value, make the 0-to-10V voltage sweep
+*.DC  Vds  0V  +10V  10mV  Vg  -0.5V  2V  0.1V
+.DC  Vds  0V  +10V  10mV  Vg  0V  2V  0.1V
+* Output
+*.plot DC I(Vds)
+.control
+let i1=-I(vds)    ; i(Vds) is negative; reverse its sign
+.endc
+.probe
+.end
+
+

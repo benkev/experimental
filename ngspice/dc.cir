@@ -1,0 +1,6 @@
+DC analysis, Fig. 15-1
+Vs 1 0  DC 9V
+R1 1 2  3k
+R2 0 2  6k
+C  0 2  5uF
+.END
