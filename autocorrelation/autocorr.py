@@ -1,0 +1,8 @@
+from pylab import *
+
+
+
+
+show()
+
+

@@ -1,0 +1,77 @@
+Hello!
+I have a similar situation, but I pass arrays to GPU from Python, not Matlab.
+
+The code below compiles and works. It is absolutely meaningless, but it shows
+the principle. 
+The float aa[140] array is treated as 3D array float matr[5][7][4].
+
+__global__ void init_pcur(Cmcmcfit *mc) {
+
+#define L 5
+#define M 7
+#define N 4
+//int L=5, M=7, N=4;
+
+typedef float mat_t[M][N];
+int i, j, k;
+
+/* Make arrays aa[140] and matr[5][7][4] overlay */
+float aa[140];
+mat_t *matr = (mat_t *) aa;
+
+for (i=0; i < N; ++i)
+for (j=0; j < N; ++j)
+for (k=0; k < M; ++k)
+matr[i][j][k] = i*j*k;
+
+. . . . . . . . . .
+
+However, for my purposes this is useless: I need to overlay arrays with the
+dimensions dependent on blockDim.x, gridDim.x, threadIdx.x, and blockIdx.x.
+The nvcc compiler does not let it. The error message is
+
+error: this operator is not allowed in an integral constant expression
+
+If I try to use just variables int L=5, M=7, N=4, then the message is
+error: expression must have a constant value
+
+By the way, my gcc 4.4.3 allows expressions like typedef float mat_t[M][N],
+where M and N are variables. This is EXTREMELY useful in some cases. The code
+below compiles and works in Linux (you are encouraged to try):
+
+
+#include <assert.h>
+#include <stdio.h>
+//#define N 9
+
+void compare(int *array, int N, int M)
+{
+typedef int mat_t[N][M];
+int i, j, k;
+mat_t *matrix = (mat_t *)array; /* 3D array [any][N][M] */
+for (i=0; i < N; ++i)
+for (j=0; j < N; ++j)
+for (k=0; k < M; ++k)
+{
+assert( &matrix[i][j][k] == &array[(i*N+j)*M+k] );
+assert( matrix[i][j][k] == array[(i*N+j)*M+k]);
+printf("matrix[%d][%d][%d]=%d\n", i, j, k, matrix[i][j][k]);
+}
+}
+
+int main(void)
+{
+int i, N=9, M=5;
+int foo[N*N*M];
+for (i=0; i < N*N*M; ++i) foo[i] = (7*i+11)*3+8;
+compare(foo, N, M);
+return 0;
+}
+
+...........................................................
+
+
+Does anybody know if it is in principle possible in CUDA C ?
+Does NVIDIA plan to upgrade nvcc to include variable bounds in typedef float
+mat_t[M][N]?
+
