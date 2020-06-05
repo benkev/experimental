@@ -1,0 +1,85 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.5 ] */
+
+/* [wxMaxima: input   start ] */
+integrate(%e^(-((1/2)*(log(r)/sx)^2))*bessel_j(0,2*%pi*q*r)*r,r,0,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate(%e^(-((1/2)*(atan2(y,x)/sy)^2))*%e^(-%i*2*%pi*(u*x+v*y)),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate(%e^(-((1/8)*(log(x^2+y^2)/sx)^2))*%e^(-%i*2*%pi*(u*x+v*y)),x,-inf,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(%e^(-x^2-y^2),x,2) + diff(%e^(-x^2-y^2),y,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(%e^(-x^2-y^2),x,1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+diff(x+y,x,2) + diff(x+y,y,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+powerseries(sin(x),x,2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+taylor(log(x),x,1,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+g(x,y):=exp(-((log(x^2+y^2))^2/(8*sx^2) + (atan2(y,x))^2/(2*sy^2)));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+define(gxx(x,y), diff(g(x,y),x,2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+define(gyy(x,y), diff(g(x,y),y,2));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+define(gxy(x,y), diff(g(x,y),x,1,y,1));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+define(gx(x,y), diff(g(x,y),x));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+define(gy(x,y), diff(g(x,y),y));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+g(1,0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gx(1,0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gy(1,0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gxx(1,0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gyy(1,0);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+gxy(1,0);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

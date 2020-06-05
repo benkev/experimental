@@ -1,0 +1,4 @@
+echo "xorg.conf from leonid2" | mail -s "xorg.conf from leonid2" -a /etc/X11/xorg.conf lbenkev@gmail.com
+
+
+
