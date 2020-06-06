@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head>
+   <title> [Tkinter-discuss] How do I identify which menu item has bee	selected?
+   </title>
+   <link rel="Index" href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/index.html">
+   <link rel="made" href="mailto:tkinter-discuss%40python.org?Subject=Re%3A%20%5BTkinter-discuss%5D%20How%20do%20I%20identify%20which%20menu%20item%20has%20bee%0A%09selected%3F&amp;In-Reply-To=%3Ca6e7dd140908190153m37583c3dqde698f5b41734fe3%40mail.gmail.com%3E">
+   <meta name="robots" content="index,nofollow">
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+   <link rel="Previous" href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/002042.html">
+   <link rel="Next" href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/002046.html">
+ </head>
+ <body bgcolor="#ffffff">
+   <h1>[Tkinter-discuss] How do I identify which menu item has bee	selected?</h1>
+    <b>Francesco Bochicchio</b> 
+    <a href="mailto:tkinter-discuss%40python.org?Subject=Re%3A%20%5BTkinter-discuss%5D%20How%20do%20I%20identify%20which%20menu%20item%20has%20bee%0A%09selected%3F&amp;In-Reply-To=%3Ca6e7dd140908190153m37583c3dqde698f5b41734fe3%40mail.gmail.com%3E" title="[Tkinter-discuss] How do I identify which menu item has bee	selected?">bieffe62 at gmail.com
+       </a><br>
+    <i>Wed Aug 19 10:53:07 CEST 2009</i>
+    <p></p><ul>
+        <li>Previous message: <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/002042.html">[Tkinter-discuss] How do I identify which menu item has bee selected?
+</a></li>
+        <li>Next message: <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/002046.html">[Tkinter-discuss] How do I identify which menu item has bee	selected?
+</a></li>
+         <li> <b>Messages sorted by:</b> 
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/date.html#2044">[ date ]</a>
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/thread.html#2044">[ thread ]</a>
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/subject.html#2044">[ subject ]</a>
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/author.html#2044">[ author ]</a>
+         </li>
+       </ul>
+    <hr>  
+<!--beginarticle-->
+<pre>2009/8/18 thicket &lt;<a href="http://mail.python.org/mailman/listinfo/tkinter-discuss">mark_eastwood at ntlworld.com</a>&gt;
+
+&gt;<i>
+</i>&gt;<i> Hi - am using python 2.6 and Tkinter 8.5.
+</i>&gt;<i>
+</i>&gt;<i> I would like to know how to identify which 'menu item' has been selected
+</i>&gt;<i> from a cascaded menu.
+</i>&gt;<i>
+</i>&gt;<i> The cascaded menu menu items are variable and created on the fly. The idea
+</i>&gt;<i> is to use a common callback for all menu items, the callback function then
+</i>&gt;<i> determines which selection was made and runs the appropriate function.
+</i>&gt;<i>
+</i>&gt;<i> I have tried binding an event to the selection and then trying to get some
+</i>&gt;<i> sort of info from the event object (event.widget()) but this appears to
+</i>&gt;<i> return info about the menu class instance and not about it's menu items.
+</i>&gt;<i>
+</i>&gt;<i> I've used Java in the past - and if I recall correctly - a menu-item is a
+</i>&gt;<i> class, in python it seems to be an attribute(list entry) of the menu class
+</i>&gt;<i> -
+</i>&gt;<i> in which case - how do I interrogate it if I do not know it's index?
+</i>&gt;<i>
+</i>&gt;<i> Any help is appreciated - it's starting to do my head in!!
+</i>
+
+
+Hi Mark,
+
+to build a menu you have:
+
+- create a menubar, which is a Menu object f type menubar:
+      mbar = Menu( type='menubar', ... )
+
+- create menus, which also are Menu objects, and adding to the menubar by
+using the add_cascade method of the menu  bar:
+      menu = menu(master=se,f.mbar, ... )
+      mbar.add_cascade( menu )
+
+- populate the menu using the add_command method of the menu:
+     menu.add_command( label='Do something', command= do_command_callback )
+
+Now, in Tkinter there is no possibility to specify parameters to pass a
+callback, but there are several ways to do it, which you can find following
+the links from here:  <a href="http://tkinter.unpy.net/wiki/Widgets/Button">http://tkinter.unpy.net/wiki/Widgets/Button</a> (section
+parameter passing: it refers to button callbacks but the same applies for
+menus).
+
+I personally tend to suggest functools.partial, which you should use like
+this to have the same callback called with a differemt menu item:
+
+      menu.add_command( label='Do something',
+command= functools.partial(do_command_callback, 1  )
+       menu.add_command( label='Do something else',
+command= functools.partial(do_command_callback, 2  ) )
+
+In case you need more examples of how to use tk widgets with python, have a
+look at this suite of the programs that I wrote some time ago (code is a bit
+old but still working with latest python versions):
+
+     <a href="http://tkinter.unpy.net/wiki/A_tour_of_Tkinter_widgets">http://tkinter.unpy.net/wiki/A_tour_of_Tkinter_widgets</a>
+
+P.S : in case you don't know, unlike Java, Python has not a 'default widget
+set', that you must use if you are coding in python.
+Instead, you can use several among the most popular widget toolkits (Gtk+,
+Qt, ... ), even Swing if you use the java version of python (Jython), which
+is a bit behind as language version (stable supports Python 2.5, beta
+supports Python 2.6).
+Tkinter has the advantage of being bundled with python (for the others you
+have to dounload and install additional modules) and surely is suitable for
+many tasks, especially if for you functionality is more important than look
+(although with a bit of effort Tk GUI can also look cool, see for instance
+aMSN, a clone of mSN Messanger written using the same toolkit of Tkinter,
+but not in Python).
+
+Sorry for the verbosity (feeling bored :-), hope I managed to help in the
+process
+
+Ciao
+------
+Francesco
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<a href="http://mail.python.org/pipermail/tkinter-discuss/attachments/20090819/2cce2bc7/attachment.htm">http://mail.python.org/pipermail/tkinter-discuss/attachments/20090819/2cce2bc7/attachment.htm</a>&gt;
+</pre>
+
+
+
+<!--endarticle-->
+    <hr>
+    <p></p><ul>
+        <!--threads-->
+	<li>Previous message: <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/002042.html">[Tkinter-discuss] How do I identify which menu item has bee selected?
+</a></li>
+	<li>Next message: <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/002046.html">[Tkinter-discuss] How do I identify which menu item has bee	selected?
+</a></li>
+         <li> <b>Messages sorted by:</b> 
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/date.html#2044">[ date ]</a>
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/thread.html#2044">[ thread ]</a>
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/subject.html#2044">[ subject ]</a>
+              <a href="https://mail.python.org/pipermail/tkinter-discuss/2009-August/author.html#2044">[ author ]</a>
+         </li>
+       </ul>
+
+<hr>
+<a href="http://mail.python.org/mailman/listinfo/tkinter-discuss">More information about the Tkinter-discuss
+mailing list</a><br>
+
+</body></html>
