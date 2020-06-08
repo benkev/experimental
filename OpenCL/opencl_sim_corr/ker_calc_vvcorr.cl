@@ -2,7 +2,7 @@
  * ker_calc_vvcorr.cl
  *
  * Calculate correlation of very long random sequences on GPU.
- * The computation of ~10^10 sequences takes ~3 minutes.
+ * The computation of ~10^10 sequences takes ~5-7 minutes.
  *
  * The used random number generator xoshiro256** is based on 64-bit floating
  * point (double) arithmetic.
