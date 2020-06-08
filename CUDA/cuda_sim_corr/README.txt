@@ -51,7 +51,32 @@ vanvleck.cu: provides functions
     int load_vvslopes()
     
     
-    
+
+
+==========================================================
+
+Some "bencmarks".
+
+GPU: Nvidia GeForce GTX 670
+
+  In CUDA, ~/experimental/CUDA/cuda_sim_corr/
+  $ ./ssc  1e6 160 64 4 2.0 1.75
+  CPU_time_used: 257.940s;  as MM:SS = 04:17.940
+
+  In OpenCL:
+  ~/experimental/OpenCL/opencl_sim_corr/
+  $ ipython2 --pylab
+  %run ocl_calc_vvcorr.py 1e6 160 64 4 2.0 1.75
+  Elapsed time 6 min 36 sec.
+
+GPU: AMD Radeon RX 580
+
+  In OpenCL:
+  ~/experimental/OpenCL/opencl_sim_corr/
+  $ ipython2 --pylab
+  %run ocl_calc_vvcorr.py 1e6 160 64 4 2.0 1.75
+  Elapsed time 5 min 24 sec.
+
     
     
     
