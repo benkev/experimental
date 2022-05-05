@@ -58,7 +58,7 @@ cl.enqueue_copy(queue, rndn, buf_rndn)
 e_time = int(time.time() - s_time)   # Elapsed time, seconds
 tmin = e_time//60
 tsec = e_time%60
-print 'Elapsed time %d min %d sec.' % (tmin, tsec)
+print('Elapsed time %d min %d sec.' % (tmin, tsec))
 
 
 queue.flush()

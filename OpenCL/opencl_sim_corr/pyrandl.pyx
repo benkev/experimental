@@ -4,8 +4,10 @@ xoshiro256** 1.0 written in Cython for speed.
 The algorithms are obtained from the webpage by Prof. Sebastiano Vigna
 "Xoshiro / xoroshiro generators and the PRNG shootout" at
 http://xoshiro.di.unimi.it/
+
 Compilation:
 import pyximport; pyximport.install()
+import pyrandl
 
 """
 
