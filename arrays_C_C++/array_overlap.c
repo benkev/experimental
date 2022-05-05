@@ -9,7 +9,7 @@ int main() {
 
   typedef double mat_t[M][N];
 
-  /* Make arrays aa[400] and matr[M,N] overlay */
+  /* Make arrays aa[400] and A[M,N] overlay */
   double aa[M*N], x;
   mat_t *A = (mat_t *) aa; /* A[any][M][N] */
 
