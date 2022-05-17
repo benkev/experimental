@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 
-main() {
+int main() {
 
     int i, a[5][4];
 

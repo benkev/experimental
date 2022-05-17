@@ -14,7 +14,7 @@
 #include <stdlib.h>
 
 
-main() {
+int main() {
   int i, j, l, m = 5, n = 7, k = 3;
   int (*A)[n] = malloc(sizeof(int[m][n]));  /* 2D array A[m][n] */
   int mn = m*n;
@@ -22,15 +22,25 @@ main() {
   int (*C)[m];        /* 2D array C[n][m] overlapping 2D array A[m][n] */
 
   //int (*P)[n][k] = malloc(sizeof(int[m][n][k]));
-  int (*P)[n][k] = malloc(sizeof(*P));  // ?????????? n, k, where is m ???
+  int (*P)[n][k] = malloc(m*n*k*sizeof(int)); // ?????????? n, k, where is m ?
   int mnk = m*n*k;
+  int nk = n*k;
   int (*Q)[n][k];        /* 3D array Q[n][m] overlapping 3D array P[m][n][k] */
   int *R = (int *)P;         /* 1D array overlapping P[m][n][k]  */
-  int (*S)[n*k] = P;
+  
+  int (*S)[nk] = (int (*)[(size_t)(nk)])P;
+
+  int ***T;
+  
+  size_t ifrm, idt, ich, ifrmdat, iqua;
+  long (*qua)[16][4]; /* 4 quantiles of the experiment data for 16 channels */
+  long *pqua;
+  int nfrm = 3;
 
   printf("Overlapping 1 and 2-dim arrays:\n\n");
 
   C = A;
+  T = (int ***)Q;
   
   for (i=0; i<mn; i++) {
     B[i] = i + 1;
@@ -42,6 +52,10 @@ main() {
   for (j=0; j<mn; j++) 
       printf("%d  ", B[j]);
   printf("\n\n");
+  
+  printf("sizeof(int[m][n]) = %d\n", sizeof(int[m][n]));
+
+  /* return 0; */
   
   for (i=0; i<m; i++) {
     for (j=0; j<n; j++) {
@@ -110,5 +124,40 @@ main() {
 
   printf("\n\n");
 
+  
+  printf("A 3D array qua[nfrm][16][4] coincides with 1D array pqua.\n");
+
+  qua = malloc(sizeof(long[nfrm][16][4]));
+  pqua = (long *)qua;
+  nfrm = 3;
+  
+  i = 1;
+  for (ifrm=0; ifrm<nfrm; ifrm++)
+      for (ich=0; ich<16; ich++)
+          for (iqua=0; iqua<4; iqua++) {
+              qua[ifrm][ich][iqua] = i;
+              i += 1;
+          }
+
+  printf("Print 3D array qua[nfrm][16][4]:\n");
+ 
+  for (ifrm=0; ifrm<nfrm; ifrm++) {
+      for (ich=0; ich<16; ich++) {
+          for (iqua=0; iqua<4; iqua++) {
+              printf("%3ld ", qua[ifrm][ich][iqua]);
+          }
+          printf("\n");
+      }
+      printf("=================\n");
+  }
+
+  printf("Print 1D array pqua[nfrm*16*4]:\n");
+ 
+  for (i=0; i<192; i++)
+      printf("%3ld ", pqua[i]);
+  printf("\n=================\n");
+
+
+  
 }
 
