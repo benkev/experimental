@@ -38,7 +38,7 @@ queue = cl.CommandQueue(ctx)
 
 #
 # Create input (generator states, rndst) and output (random numbers, rndu)
-# buffersin the GPU memory. The mf.COPY_HOST_PTR flag forces copying from
+# buffers in the GPU memory. The mf.COPY_HOST_PTR flag forces copying from
 # the host buffer, rndst, to the device buffer (referred as buf_rndst)
 # in the GPU memory.
 #

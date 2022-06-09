@@ -27,7 +27,7 @@ r = 0.01, and N = 10000, the error is (1 - 0.0001)/100 = 0.01.
  *
  * $ ./ssc  1e6  160  64  4  2.0 1.75
  *
- * -- use 1^6 samples in each thread times 160 blocks times 64 threads
+ * -- use 10^6 samples in each thread times 160 blocks times 64 threads
  * per block, which makes 10,240,000,000 samples on total.
  *
  */
