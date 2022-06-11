@@ -34,8 +34,8 @@ s_time = time.time()
 #
 # Input from the command line
 #
-if len(sys.argv) <> 7:
-	print
+if len(sys.argv) != 7:
+	print()
 	print('Usage:\n');		   
 	print('ocl_calc_vvcorr nrand nwgroup nwitem nbit sig1 sig2\n')
 	print('	  nrand: number of random samples in one sequence (thread)')
@@ -57,9 +57,9 @@ sy = float(sys.argv[6])
 nseq = Nwitem*Nwgroup
 ntotal = nseq*nrand
 
-print 'nrand=%d, Nwgroup=%d, Nwitem=%d, nbit=%d, nseq=%d, ntotal=%d' % \
-		(nrand, Nwgroup, Nwitem, nbit, nseq, ntotal)
-print 'sx=%f, sy=%f' % (sx, sy)
+print('nrand=%d, Nwgroup=%d, Nwitem=%d, nbit=%d, nseq=%d, ntotal=%d' % \
+		(nrand, Nwgroup, Nwitem, nbit, nseq, ntotal))
+print('sx=%f, sy=%f' % (sx, sy))
 
 #
 # Define structures
@@ -173,7 +173,7 @@ for isn in range(nsnr):
 	ci_h[0]['a'] = snr[isn] / np.sqrt(1. + pow(snr[isn],2))
 	ci_h[0]['b'] = np.sqrt(1. - pow(ci_h[0]['a'],2))
 
-	print 'Py: a=%g, b=%g' % (ci_h[0]['a'], ci_h[0]['b'])
+	print('Py: a=%g, b=%g' % (ci_h[0]['a'], ci_h[0]['b']))
 	
 	ci = cl.array.to_device(queue, ci_h)
 
@@ -200,45 +200,45 @@ for isn in range(nsnr):
 	#vcor[isn] = lininterp_vv(npoint, kap, rho, qcov[isn]);
 
 
-# print
-# print 'rndst:'
-# for i in range(nseq): print "%20d, %20d, %20d, %20d" % tuple(rndst[i,:])
-# print
+# print()
+# print('rndst:')
+# for i in range(nseq): print("%20d, %20d, %20d, %20d" % tuple(rndst[i,:]))
+# print()
 
-print 
-print 
-print "thrho = ",
-for i in range(nsnr): print "%.8f " % thrho[i],
-print 
-print "snr =   ",
-for i in range(nsnr): print "%.8f " % snr[i],
-print 
-print "qcov =  ",
-for i in range(nsnr): print "%.8f " % qcov[i],
-print 
-print "cor =   ",
-for i in range(nsnr): print "%.8f " % cor[i],
-print 
-# print "vcor =  " 
-# for i in range(nsnr): print "%.8f " % vcor[i]
-# print 
-# print "sqcor = " 
-# for i in range(nsnr): print "%.8f " % sqcor[i]
-# print 
-# print "dq =    " 
-# for i in range(nsnr): print "%10.5f " % dq[i]
-# print 
-# print "dv =    " 
-# for i in range(nsnr): print "%10.5f " % dv[i]
-# print 
+print()
+print()
+print("thrho = ")
+for i in range(nsnr): print("%.8f " % thrho[i])
+print()
+print("snr =   ")
+for i in range(nsnr): print("%.8f " % snr[i])
+print()
+print("qcov =  ")
+for i in range(nsnr): print("%.8f " % qcov[i])
+print()
+print("cor =   ")
+for i in range(nsnr): print("%.8f " % cor[i])
+print()
+# print("vcor =  " )
+# for i in range(nsnr): print("%.8f " % vcor[i])
+# print()
+# print("sqcor = " )
+# for i in range(nsnr): print("%.8f " % sqcor[i])
+# print()
+# print("dq =    " )
+# for i in range(nsnr): print("%10.5f " % dq[i])
+# print()
+# print("dv =    ") 
+# for i in range(nsnr): print("%10.5f " % dv[i])
+# print()
 
 	
 
 e_time = int(time.time() - s_time)	 # Elapsed time, seconds
 tmin = e_time//60
 tsec = e_time%60
-print
-print 'Elapsed time %d min %d sec.' % (tmin, tsec)
+print()
+print('Elapsed time %d min %d sec.' % (tmin, tsec))
 
 
 queue.flush()

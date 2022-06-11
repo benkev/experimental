@@ -52,3 +52,7 @@ GPU: AMD Radeon RX 580
   $ ipython2 --pylab
   %run ocl_calc_vvcorr.py 1e6 160 64 4 2.0 1.75
   Elapsed time 5 min 24 sec.
+
+
+=============================================================
+
