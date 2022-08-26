@@ -2,7 +2,11 @@
  * Comparison speeds of different methods of file reading. From
  *
  * https://stackoverflow.com/questions/3002122/fastest-file-reading-in-c
- *
+ * 
+ * Use:
+ * $ gcc file_read_time.c -o ft; ./ft
+ * $ gcc file_read_time.c -o ft -DUSE_FREAD; ./ft
+ * $ gcc file_read_time.c -o ft -DUSE_MMAP;  ./ft
  */
 
 /* If you're reading from an actual hard disk, it's going to be slow. The hard disk is your bottle neck, and that's it. */
