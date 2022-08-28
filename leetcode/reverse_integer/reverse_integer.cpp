@@ -1,4 +1,11 @@
+//
+// gcc reverse_integer.cpp -o ripp -lstdc++
+//
+
 #include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
 
 class Solution {
 public:
@@ -38,3 +45,11 @@ public:
         return y;
     }
 };
+
+int main(int argc, char *argv[]) {
+    int x = atoi(argv[1]);
+    Solution sol;
+    int y = sol.reverse(x);
+    printf("reverse_main(%d) = %d", x, y);
+    return y;
+}

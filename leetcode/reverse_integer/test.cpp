@@ -1,3 +1,6 @@
+//
+// gcc test.cpp -o tpp -lstdc++
+//
 #include <iostream>
 
 using namespace std;
