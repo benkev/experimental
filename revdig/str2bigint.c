@@ -21,10 +21,17 @@ int main(int argc, char *argv[]) {
     //char str[] = "34143735976";
     //char str[] = "3414373597";
     //char str[] = "1234567";
+
     char str[] = "356901";
-    int nd = 2;
-    uint b[2] = {0, 0};  /* b[0] is the minor digit */
-    uint q[2] = {0, 0};
+
+    /* int nd = 2; */
+    /* uint b[2] = {0, 0};  /\* b[0] is the minor digit *\/ */
+    /* uint q[2] = {0, 0}; */
+
+    int nd = 10;
+    uint b[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};  /* b[0] is the minor digit */
+    uint q[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
     uint c;  /* Carry. Non-zero if str does not fit into  */
     uint r;
     ulong bl = 0, res = 0;
@@ -157,6 +164,12 @@ int main(int argc, char *argv[]) {
 
     printf("bstr = \"%s\"\n", bstr);
 
+    free(bstr);
+    
+    bstr = bint2str(b, nd);
+
+    printf("bstr = \"%s\"\n", bstr);
+
     //=================================================
 
     printf("//=================================================\n");
@@ -168,6 +181,12 @@ int main(int argc, char *argv[]) {
     
     printf("Convert bl = %lu to string:\n", bl);
     printf("char *bstr = bint2str(uint b, int nd);\n");
+    
+    bstr = bint2str(b, nd);
+
+    printf("bstr = \"%s\"\n", bstr);
+
+    free(bstr);
     
     bstr = bint2str(b, nd);
 
@@ -196,6 +215,37 @@ int main(int argc, char *argv[]) {
     bstr = bint2str(b, nd);
 
     printf("bstr = \"%s\"\n", bstr);
+
+     //=================================================
+
+    printf("//=================================================\n");
+
+    char str2[] = "281474976710655281474976710655";
+    
+    printf("str2 = \"%s\"\n", str2);
+
+    printf("c = str2bint(b, nd, str2);\n");
+   
+    c = str2bint(b, nd, str2);
+    
+    bl = 65536*(65536*b[2] + b[1]) + b[0];
+    printf("c = %d, bl = %lu\n\n", c, bl);
+    printf("bl[2,1,0] = %lu, %lu, %lu %lu, %lu, %lu, %lu\n",
+           b[6], b[5], b[4], b[3], b[2], b[1], b[0]);
+    printf("bl[2,1,0] = %x, %x, %x, %x, %x, %x %x\n", 
+           b[6], b[5], b[4], b[3], b[2], b[1], b[0]);
+
+    free(bstr);
+    
+    printf("Convert bl = %lu to string:\n", bl);
+    printf("char *bstr = bint2str(b, nd);\n");
+    
+    bstr = bint2str(b, nd);
+
+    printf("bstr = \"%s\"\n", bstr);
+    
+    free(bstr);
+    
 
     
     
