@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
 
     //res = 65536*q[0] + q[1];
     res = 65536*q[1] + q[0];
-    printf("q = %lu, %lu\n", q[1], q[0]);
-    printf("res = %lu, r = %lu\n\n", res, r);
+    printf("q = %u, %u\n", q[1], q[0]);
+    printf("res = %lu, r = %u\n\n", res, r);
 
 
     // bl = 8791 = 0x2257 = 0, 8791
@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
     r = bdiv(b, 10, q, nd);
 
     res = 65536*q[1] + q[0];
-    printf("q = %lu, %lu\n", q[1], q[0]);
-    printf("res = %lu, r = %lu\n\n", res, r);
+    printf("q = %u, %u\n", q[1], q[0]);
+    printf("res = %lu, r = %u\n\n", res, r);
 
 
     // bl = 4042386655 = 0xf0f1ecdf = 0xf0f1, 0xecdf = 61681, 60639
@@ -87,8 +87,8 @@ int main(int argc, char *argv[]) {
     r = bdiv(b, 10, q, nd);
 
     res = 65536*q[1] + q[0];
-    printf("q = %lu, %lu\n", q[1], q[0]);
-    printf("res = %lu, r = %lu\n\n", res, r);
+    printf("q = %u, %u\n", q[1], q[0]);
+    printf("res = %lu, r = %u\n\n", res, r);
 
     
     // bl = 356901 = 0x57225 = 0x5, 0x7225 = 5, 29221
@@ -98,8 +98,8 @@ int main(int argc, char *argv[]) {
     r = bdiv(b, 4, q, nd);
 
     res = 65536*q[1] + q[0];
-    printf("q = %lu, %lu\n", q[1], q[0]);
-    printf("res = %lu, r = %lu\n\n", res, r);
+    printf("q = %u, %u\n", q[1], q[0]);
+    printf("res = %lu, r = %u\n\n", res, r);
     
     //=================================================
 
@@ -124,8 +124,8 @@ int main(int argc, char *argv[]) {
     r = bdiv(b, d, q, nd);
 
     res = 65536*q[1] + q[0];
-    printf("q = %lu, %lu\n", q[1], q[0]);
-    printf("res = %u, r = %u\n\n", res, r);
+    printf("q = %u, %u\n", q[1], q[0]);
+    printf("res = %lu, r = %u\n\n", res, r);
 
     //=================================================
 
@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
 
     res = 65536*q[1] + q[0];
     printf("q = %u, %u\n", q[1], q[0]);
-    printf("res = %lu, r = %lu\n\n", res, r);
+    printf("res = %lu, r = %u\n\n", res, r);
 
 
 
@@ -230,7 +230,7 @@ int main(int argc, char *argv[]) {
     
     bl = 65536*(65536*b[2] + b[1]) + b[0];
     printf("c = %d, bl = %lu\n\n", c, bl);
-    printf("bl[2,1,0] = %lu, %lu, %lu %lu, %lu, %lu, %lu\n",
+    printf("bl[2,1,0] = %u, %u, %u %u, %u, %u, %u\n",
            b[6], b[5], b[4], b[3], b[2], b[1], b[0]);
     printf("bl[2,1,0] = %x, %x, %x, %x, %x, %x %x\n", 
            b[6], b[5], b[4], b[3], b[2], b[1], b[0]);
