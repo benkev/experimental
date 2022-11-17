@@ -322,7 +322,7 @@ uint badd(uint c, uint a, uint b[], int nd) {
 
     b[0] += a;    
     for (int i = 0; i < nd; i++) {
-        bc = b[i] + c;
+        bc = b[i] + c;             // ????????????????? CHECK CORRECTNESS!
         b[i] = bc % 65536;
         c =    bc / 65536;
         if (c != 0) printf("badd c = %x\n", c);
@@ -368,24 +368,25 @@ int str2bint(uint b[], int nd, char str[]) {
     uint base = 10, s, c = 0; 
     int ns = strlen(str);
 
-    for (int i = 0; i < nd; i++) b[i] = 0;
+    for (int i = 0; i < nd; i++) b[i] = 0;  // Zeroize b: b = 0
         
     for (int i = 0; i < ns; i++) {
         s = str[i] - '0';
         
-        c = bmul(c, base, b, nd);
+        c = bmul(c, base, b, nd);  // Move b up by one decimal digit: b = 10*b
         
         if (c != 0) {
             printf("str2bint, bmul c = %x\n", c);
             return c;
         }
         
-        c = badd(c, s, b, nd);
+        c = badd(c, s, b, nd); // Place str[i] into the least significant digit
         if (c != 0) {
             return c;
         }
     }
-    
+
+    return c;
 }
 
 
