@@ -14,6 +14,7 @@ uint bdiv(uint a[], uint b, uint q[], int nd);
 uint bdiv_bigendian(uint a[], uint b, uint q[], int nd);
 int str2bint(uint b[], int nd, char str[]);
 char* bint2str(uint b[], int nd);
+int str2bint(uint b[], int nd, char str[]);
 
 int main(int argc, char *argv[]) {
 
