@@ -20,7 +20,8 @@ int reverse(int x) {
         if ((limit2/10 > y) || (limit2/10 == y && x%10 < limit2%10))
             return 0;
 
-        printf("y = %x, 10*y = %x, x%10 = %x\n", y, y*10, x%10);
+        printf("y = %8d, 10*y = %8d, x%10 = %8d\n", y, y*10, x%10);
+        printf("y = %08x, 10*y = %08x, x%10 = %08x\n\n", y, y*10, x%10);
         
         y = y*10 + x%10;
         x /= 10;
