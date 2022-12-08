@@ -10,17 +10,18 @@ import matplotlib.pyplot as pl
 #     print()
 
 if len(sys.argv) < 3:
-    print("Must be 2 parameters")
+    # print("Must be 2 parameters: number n and probability p.")
+    print("Must be a parameter: number n.")
     raise SystemExit
 
 n = int(sys.argv[1])
-p = float(sys.argv[2])
+# p = float(sys.argv[2])
 
-if (n <= 0) or (p < 0.0) or (p > 1.0):
-    print("Wrong input: n = %d, p = %f" % (n, p))
-    raise SystemExit
+# if (n <= 0) or (p < 0.0) or (p > 1.0):
+#     print("Wrong input: n = %d, p = %f" % (n, p))
+#     raise SystemExit
 
-q = 1 - p
+# q = 1 - p
 
 pmf = np.zeros(n+1, dtype=float)
 
