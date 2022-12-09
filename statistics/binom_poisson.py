@@ -9,7 +9,7 @@ import matplotlib.pyplot as pl
 #         print("%4d " % comb(i,j), end="")
 #     print()
 
-if len(sys.argv) < 3:
+if len(sys.argv) < 2:       # < 3:
     # print("Must be 2 parameters: number n and probability p.")
     print("Must be a parameter: number n.")
     raise SystemExit
