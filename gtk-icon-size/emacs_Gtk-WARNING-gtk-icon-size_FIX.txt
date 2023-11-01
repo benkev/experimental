@@ -1,0 +1,41 @@
+Fixing the warnings after
+$ emacs file.name &
+
+(emacs:494959): Gtk-WARNING **: 12:29:48.092: Theme parsing error: gtk.css:1649:16: '-gtk-icon-size' is not a valid property name
+
+(emacs:494959): Gtk-WARNING **: 12:29:48.092: Theme parsing error: gtk.css:1652:16: '-gtk-icon-size' is not a valid property name
+
+Solution:
+find / -name gtk.css > find.gtk.css.txt
+ll /usr/share/themes/*/gtk*/gtk.css
+grep -n '\-gtk\-icon\-size' /usr/share/themes/*/gtk*/gtk.css > grep_gtk.css.txt
+
+grep_gtk.css.txt:
+/usr/share/themes/Breeze/gtk-3.0/gtk.css:1649:  -gtk-icon-size: 16px; }
+/usr/share/themes/Breeze/gtk-3.0/gtk.css:1652:  -gtk-icon-size: 32px; }
+
+From /usr/share/themes/Breeze/gtk-3.0/gtk.css
+in the piece:
+   1644 filechooser #pathbarbox {
+   1645   background-color: @theme_bg_color_breeze;
+   1646   border-bottom: 1px solid @borders_breeze; }
+   1647 
+   1648 .normal-icons {
+   1649   -gtk-icon-size: 16px; }
+   1650 
+   1651 .large-icons {
+   1652   -gtk-icon-size: 32px; }
+   1653 
+   1654 /***************
+   1655  * Header bars *
+   1656  ***************/
+   1657 
+   1658 headerbar {
+
+remove 
+   1648 .normal-icons {
+   1649   -gtk-icon-size: 16px; }
+   1650 
+   1651 .large-icons {
+   1652   -gtk-icon-size: 32px; }
+
