@@ -6,11 +6,11 @@ Q1   1  2  0  npn_transistor  ; Qxxx C B E name
 * Transistor model
 .model npn_transistor NPN (Is=1.8104e-15A Bf=100 Vaf=35V)
 * Vary Vce from 0V to 10V in 0.01V steps
-*.DC  Vce  0V  +10V  10mV
+.DC  Vce  0V  +10V  10mV
 * For each current value, make the 0-to-10V voltage sweep
-.DC  Vce  0V  +10V  10mV  Ib  1u  10u  1u
+* .DC  Vce  0V  +10V  10mV  Ib  1u  10u  1u
 * Output
-*.plot DC I(Vce)
+.plot DC I(Vce)
 *.let i1=-i(vce)    ; i(Vce) is negative; reverse its sign
 .probe
 .end

@@ -3,7 +3,7 @@ Test the BFT46 JFET
 Vdd  2  0  DC  4.0V
 * Circuit description
 J1  2  1  1  BFT46  ; Jxxx D G S model_name
-R1  1  0  100
+R1  1  0  1k
 .MODEL  BFT46   NJF
 +             VTO = -6.4188E-001
 * +            BETA = 1.86172E-003
@@ -18,4 +18,16 @@ R1  1  0  100
 +              FC = 5.00000E-001
 
 * .tran  10us  5ms  ; time_step time_stop
-.dc Vdd  0  5  0.1
+
+.dc   Vdd  0.001  10  0.1   R1 10 5.01k 1k
+* .dc Vdd  0  5  0.1
+
+.probe alli
+.control
+set color0=white
+* run
+* dc Vdd  0  5  0.1
+run
+* plot v(1)
+plot i(R1)
+.endc
