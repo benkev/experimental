@@ -1,0 +1,23 @@
+*
+* Test IRLB8314 characteristics
+*
+.include irlb8314pbf.spi
+
+XM 1 2 0 irlb8314pbf        ; D G S
+VDS 1 0 10V
+VGS 2 0 2.8V
+
+.dc   VDS  0.001  30  0.1     VGS  2.8  6  0.2
+* .dc VGS  2.5  6  0.1 VDS  0.1  20  0.1
+
+* .dc VGS  2.5  6  0.1
+* .dc VDS  0.001  20  0.1
+.probe alli
+
+.control
+set color0=white
+run
+
+plot  -i(VDS)
+plot loglog -i(VDS)
+.endc

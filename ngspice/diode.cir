@@ -1,0 +1,17 @@
+Diode Characteristic
+
+v1 1 0 0
+d1 1 0 di_1N4007
+
+.model di_1N4007 d (is=76.9p rs=42.0m bv=1.00k ibv=5.00u cjo=26.5p
++ m=0.333 n=1.45 tt=4.32u)
+
+* .model di_1N4007 d
+
+.dc v1 0 0.9 0.01  ; DOES NOT WORK???
+
+.control
+dc v1 0 0.9 0.01
+plot -i(v1)
+.endc
+.end

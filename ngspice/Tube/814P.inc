@@ -1,0 +1,27 @@
+*
+* Generic pentode model: 814P
+* Copyright 2003--2008 by Ayumi Nakabayashi, All rights reserved.
+* Version 3.10, Generated on Sun Nov 21 21:43:33 2010
+*            Plate
+*            | Screen Grid
+*            | | Control Grid
+*            | | | Cathode
+*            | | | |
+.SUBCKT 814P A S G K
+.PARAM X1=0.99997793 X2=0.0050824018 X3=-0.057991999
+.PARAM X4=0.96277773 X5=7.3237559 X6=1.557992
+.PARAM X7=0.00052636102 X8=7.6069021 X9=0.0004358701
+.PARAM Y1=0.00026318051 Y2=0.905244734 Y3=0.094755266
+.PARAM Y4=0.00037031315 EA=2400
+BK IK 0 V=U(V(G,K)+X1)*X7*URAMP(V(G,K)+X1+URAMP(V(S,K))/X8)^1.5+(1-U(V(G,K)+X1))*X9*(X2*URAMP(V(S,K)))^X3*(X4*URAMP(V(G,K)+X1+URAMP(V(S,K))/X5))^X6 
+BL IL 0 V=(V(IK)-Y1*URAMP(V(G,K))^1.5*(URAMP(V(G,K))/(URAMP(V(A,K))+URAMP(V(G,K)))*1.2+.4))*(1-.4*(EXP(-URAMP(V(A,K))/URAMP(V(S,K))*15)-EXP(-15)))
+BM IM 0 V=V(IL)*(URAMP(V(A,K))+EA)/(URAMP(V(S,K))+EA)-URAMP(V(IL)*(URAMP(V(A,K))+EA)/(URAMP(V(S,K))+EA)-(Y4*(URAMP(V(A,K))+URAMP(URAMP(V(S,K))-URAMP(V(A,K))))^1.5))
+BA A K I=URAMP(Y4*URAMP(V(A,K))^1.5-URAMP(Y4*URAMP(V(A,K))^1.5-V(IM)+V(IL)*(Y2*(1-URAMP(V(A,K))/(URAMP(V(A,K))+10))^1.5+Y3)))+1E-10*V(A,K)
+BS S K I=URAMP(V(IM)-URAMP(Y4*URAMP(V(A,K))^1.5-URAMP(Y4*URAMP(V(A,K))^1.5-V(IM)+V(IL)*(Y2*(1-URAMP(V(A,K))/(URAMP(V(A,K))+10))^1.5+Y3))))
+BG G K I=Y1*URAMP(V(G,K))^1.5*(URAMP(V(G,K))/(URAMP(V(A,K))+URAMP(V(G,K)))*1.2+.4)
+* CAPS
+CGA G A 0.15p
+CGK G K 8.1p
+CGS G S 5.4p
+CAK A K 13.5p
+.ENDS
