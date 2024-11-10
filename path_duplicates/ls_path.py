@@ -10,10 +10,15 @@
 # python ls_paths.py
 #
 
-import os
+import os, sys
+
+if len(sys.argv) > 1:
+	PATH = sys.argv[1]
+else:
+	PATH = 'PATH'          # Default
 
 user = os.getenv('USER')
-path1 = os.getenv('PATH')    # A single string ':'-separated
+path1 = os.getenv(PATH)    # A single string ':'-separated
 path = path1.split(':')      # List of all the paths
 
 
