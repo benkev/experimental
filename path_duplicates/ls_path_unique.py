@@ -1,20 +1,32 @@
 #!/usr/bin/env python
 #
-# ls_path_unique.py
+# ls_path_unique.py [environment_variable]
 #
-# Read a copy of the system PATH variable, remove from it all the duplicate
-# paths leaving only the leftmost ones, and print the result
+# Print $PATH (or any environment variable with colon-separated content),
+# one path on a separate line, leaving only unique paths.
 #
-# Example: 
+# Reads a copy of the system PATH variable, removes from it all the duplicate
+# paths leaving only the leftmost ones, and prints the result to stdout.
+#
+# Examples: 
 #
 # python ls_path_unique.py
 #
+# python ls_paths.py PYTHONPATH
+#
 
-import os
-#import numpy as np
+import os, sys
 
-user = os.getenv('USER')
-path1 = os.getenv('PATH')    # A single string ':'-separated
+if len(sys.argv) > 1:
+	PATH = sys.argv[1]
+else:
+	PATH = 'PATH'          # Default
+
+if os.getenv(PATH) is None:
+    print(PATH, " is empy.")
+    sys.exit(1)
+    
+path1 = os.getenv(PATH)    # A single string ':'-separated
 path1 = path1.split(':')      # List of all the paths
 
 
@@ -24,7 +36,6 @@ path1 = path1.split(':')      # List of all the paths
 path2 = []
 ndir = len(path1)
 
-idir = 0
 while (True):
     try:
         d1 = path1.pop(0)
