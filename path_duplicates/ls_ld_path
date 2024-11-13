@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# From https://stackoverflow.com/questions/27223686/ \
+#              why-cant-ld-find-library-from-path-in-etc-ld-so-conf
+#
+# ld is the static linker.
+# ld.so is the dynamic linker
+# (and ldconfig & ldd are related to the dynamic linker).
+#
+
+# Print the static linker ld path line-by-line
+echo
+echo "STATIC, ld:"
+ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012
+
+# Print the dynamic linker ld.so path line-by-line
+echo
+echo "DYNAMIC, ld.so:"
+ldconfig -v 2>/dev/null | grep -v ^$'\t'
+
+
