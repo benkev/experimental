@@ -11,8 +11,10 @@
 # Print the static linker ld path line-by-line
 echo
 echo "STATIC, ld:"
-echo "ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\\012"
-ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012
+# echo "ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\\012"
+# ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012
+echo "ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\\n"
+ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\n
 
 # Print the dynamic linker ld.so path line-by-line
 echo
