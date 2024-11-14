@@ -11,11 +11,13 @@
 # Print the static linker ld path line-by-line
 echo
 echo "STATIC, ld:"
+echo "ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\\012"
 ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012
 
 # Print the dynamic linker ld.so path line-by-line
 echo
 echo "DYNAMIC, ld.so:"
+echo "ldconfig -v 2>/dev/null | grep -v ^$'\t'"
 ldconfig -v 2>/dev/null | grep -v ^$'\t'
 
 
