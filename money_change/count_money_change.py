@@ -1,30 +1,39 @@
+help_txt = '''
+Exchange a sum of money with coins of the denominations given in
+the noms list. The noms list must be sorted in descending orderю
+
+Example:
+  Exchange $1 for 1, 2, 5, 20, and 50 cent coins:
+
+    count = countChange(100, [50, 20, 10, 5, 2, 1])
+
+
+'''
+
 from pylab import *
 import copy
 
 def countChange(money, noms):
 
-    
-
     if len(noms) > 1:
         maxnom = noms.pop(0)
-	niter = money//maxnom
+        niter = money//maxnom
         nways = 0
 
-        print 'With denomination %d, niter=%d:' % (maxnom, niter) 
+        print('With denomination %d, niter=%d:' % (maxnom, niter))
 
-	for i in xrange(niter,0,-1):      # Check all changes: niter..1
+        for i in range(niter,0,-1):      # Check all changes: niter..1
             leftover = money - i*maxnom
-	    noms1 = copy.copy(noms)
+            noms1 = copy.copy(noms)
             nways += countChange(leftover, noms1)
 
-            print 'maxnom=%d, leftover=%d, nways=%d' % \
-                  (maxnom, leftover, nways), ', noms=', noms
+            print('maxnom=%d, leftover=%d, nways=%d' % \
+                  (maxnom, leftover, nways), ', noms=', noms)
 
         return nways
 
     else:
         return 1
-
 
 
 if __name__ == '__main__':
@@ -34,11 +43,11 @@ if __name__ == '__main__':
 
     count = countChange(money, noms)
 
-    print "count = ", count
+    print("count = ", count)
 
 
 
-
+'''
 With denomination 10, niter=2:
 With denomination 5, niter=0:
 maxnom=10, leftover=3, nways=0 , noms= [5, 3, 2, 1]
@@ -58,7 +67,7 @@ maxnom=3, leftover=5, nways=3 , noms= [2, 1]
 maxnom=5, leftover=8, nways=3 , noms= [3, 2, 1]
 maxnom=10, leftover=13, nways=3 , noms= [5, 3, 2, 1]
 count =  3
-
+'''
 
 
 
