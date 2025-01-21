@@ -21,64 +21,37 @@ Examples:
 from pylab import *
 import copy
 
-ways = []
 
-def build_money_change_tree(money, noms):
+def build_money_change_tree(tree, money, noms):
 
-    if len(noms) > 1:
+    if while noms:
         maxnom = noms.pop(0)
         niter = money//maxnom
-        nways = 0
 
         print('With denomination %d, niter=%d:' % (maxnom, niter))
 
         for i in range(niter,0,-1):      # Check all changes: niter..1
             leftover = money - i*maxnom
             noms1 = copy.copy(noms)
-            nways += build_money_change_tree(leftover, noms1)
+            build_money_change_tree(leftover, noms1)
 
-            print('maxnom=%d, leftover=%d, nways=%d' % \
-                  (maxnom, leftover, nways), ', noms=', noms)
 
-        return nways
+        return # nways
 
     else:
-        return 1
+        return # 1
 
 
 if __name__ == '__main__':
     
     noms = [10, 5, 3, 2, 1]
-    money = 23
+    money = 13
 
-    count = build_money_change_tree(money, noms)
+    tree = []
+    
+    build_money_change_tree(tree, money, noms)
 
     print("count = ", count)
-
-
-
-'''
-With denomination 10, niter=2:
-With denomination 5, niter=0:
-maxnom=10, leftover=3, nways=0 , noms= [5, 3, 2, 1]
-With denomination 5, niter=2:
-With denomination 3, niter=1:
-With denomination 2, niter=0:
-maxnom=3, leftover=0, nways=0 , noms= [2, 1]
-maxnom=5, leftover=3, nways=0 , noms= [3, 2, 1]
-With denomination 3, niter=2:
-With denomination 2, niter=1:
-maxnom=2, leftover=0, nways=1 , noms= [1]
-maxnom=3, leftover=2, nways=1 , noms= [2, 1]
-With denomination 2, niter=2:
-maxnom=2, leftover=1, nways=1 , noms= [1]
-maxnom=2, leftover=3, nways=2 , noms= [1]
-maxnom=3, leftover=5, nways=3 , noms= [2, 1]
-maxnom=5, leftover=8, nways=3 , noms= [3, 2, 1]
-maxnom=10, leftover=13, nways=3 , noms= [5, 3, 2, 1]
-count =  3
-'''
-
 
 
 
