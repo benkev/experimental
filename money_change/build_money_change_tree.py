@@ -1,9 +1,9 @@
 help_txt = '''
-tree = []
-build_money_change_tree(tree, money, noms)
+
+tree = build_money_change_tree(money, coins)
 
 Build a tree of all the possible exchanges a sum of money with coins
-of the denominations given in the noms list. The noms list must be
+of the denominations given in the coins list. The coins list must be
 sorted in descending order. The tree must be an empty list.
 
 Examples:
@@ -22,36 +22,39 @@ from pylab import *
 import copy
 
 
-def build_money_change_tree(tree, money, noms):
-
-    if while noms:
-        maxnom = noms.pop(0)
+def build_money_change_tree(money, coins):
+    print("coins = ", coins)
+    if coins:
+        maxnom = coins.pop(0)
         niter = money//maxnom
 
-        print('With denomination %d, niter=%d:' % (maxnom, niter))
-
-        for i in range(niter,0,-1):      # Check all changes: niter..1
+        tree = []
+        for i in range(niter,0,-1):      # Check all changes: niter .. 1
             leftover = money - i*maxnom
-            noms1 = copy.copy(noms)
-            build_money_change_tree(leftover, noms1)
+            coins1 = copy.copy(coins)
+            subtree = build_money_change_tree(leftover, coins1)
+            print("subtree = ", subtree)
+            change = [maxnom for n in range(i)]
+            change.extend(subtree)
+            tree.append(change)
+            print("tree = ", tree)
 
-
-        return # nways
-
+        return tree
     else:
-        return # 1
+        return []
+
 
 
 if __name__ == '__main__':
     
-    noms = [10, 5, 3, 2, 1]
-    money = 13
+    coins = [2, 1]
+    money = 5
 
-    tree = []
-    
-    build_money_change_tree(tree, money, noms)
+    tree = build_money_change_tree(money, coins)
 
-    print("count = ", count)
+
+
+
 
 
 
