@@ -23,25 +23,31 @@ import copy
 
 
 def build_money_change_tree(money, coins):
-    print("coins = ", coins)
-    if coins:
-        maxnom = coins.pop(0)
-        niter = money//maxnom
+    print("1. coins = ", coins)
+#   if coins:
+    coin = coins.pop(0)   # Extract the biggest coin from the list
+    niter = money//coin
+    print("2. coin = ", coin)
 
-        tree = []
-        for i in range(niter,0,-1):      # Check all changes: niter .. 1
-            leftover = money - i*maxnom
-            coins1 = copy.copy(coins)
-            subtree = build_money_change_tree(leftover, coins1)
-            print("subtree = ", subtree)
-            change = [maxnom for n in range(i)]
-            change.extend(subtree)
-            tree.append(change)
-            print("tree = ", tree)
-
+    if coins is []:
+        tree = [coin for n in range(niter)]
+        print("3. tree = ", tree)
         return tree
-    else:
-        return []
+
+    tree = []
+    for i in range(niter,0,-1):      # Check all changes: niter .. 1
+        leftover = money - i*coin
+        coins1 = copy.copy(coins)
+        subtree = build_money_change_tree(leftover, coins1)
+        print("subtree = ", subtree)
+        change = [coin for n in range(i)]
+        change.extend(subtree)
+        tree.append(change)
+        print("4. tree = ", tree)
+
+    return tree
+#   else:
+#       return []
 
 
 
