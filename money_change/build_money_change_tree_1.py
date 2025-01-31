@@ -1,3 +1,7 @@
+#
+# An OLD version !!!!!!!!!!!!!!!!!!!!!!!!
+#
+
 help_txt = '''
 
 tree = build_money_change_tree(money, coins)
@@ -22,7 +26,7 @@ from pylab import *
 import copy
 
 
-def build_money_change_tree(tree,money, coins):
+def build_money_change_tree(tree, money, coins):
     print("\n\n1. coins = ", coins)
 
     while True:

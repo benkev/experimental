@@ -22,7 +22,7 @@ from pylab import *
 import copy
 
 
-def build_money_change_tree(tree,money, coins):
+def build_money_change_tree(tree, money, coins):
     print("1. coins = ", coins)
 
     while True:
@@ -38,15 +38,27 @@ def build_money_change_tree(tree,money, coins):
 
         for i in range(niter,0,-1):      # Check all changes: niter .. 1
             leftover = money - i*coin
-            coins1 = copy.copy(coins)
-
-            subtree = build_money_change_tree(tree, leftover, coins1)
-
-            print("subtree = ", subtree)
             change = [coin for n in range(i)]
-            change.extend(subtree)
-            tree.append(change)
-            print("4. tree = ", tree)
+
+            print("4. leftover = ", leftover, ", change = ", change)
+
+            if leftover == 0:           # No need to dive into recursion
+                tree.append(change)
+
+            if leftover == coins[-1]:   # No need to dive into recursion
+                change.append(leftover)
+                tree.append(change)
+            else:
+                coins1 = copy.copy(coins)
+
+                subtree = build_money_change_tree(tree, leftover, coins1)
+
+                print("subtree = ", subtree)
+
+                change.extend(subtree)
+                tree.append(change)
+
+                print("5. tree = ", tree)
 
     return tree
 
