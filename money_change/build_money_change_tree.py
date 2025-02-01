@@ -22,18 +22,19 @@ from pylab import *
 import copy
 
 
-def build_money_change_tree(tree, money, coins):
-    print("1. coins = ", coins)
+def build_money_change_tree(money, coins):
+    
+    print("1. money = ", money, ", coins = ", coins)
+
+    tree = []
 
     while True:
         coin = coins.pop(0)   # Extract the biggest coin from the list
         niter = money//coin
-        print("2. coin = ", coin)
+        print("2. coin = ", coin, ", niter = ", niter)
 
         if len(coins) == 0:
-            print("3a. tree = ", tree)
             tree.append([coin for n in range(niter)])
-            print("3b. tree = ", tree)
             return tree
 
         for i in range(niter,0,-1):      # Check all changes: niter .. 1
@@ -42,23 +43,20 @@ def build_money_change_tree(tree, money, coins):
 
             print("4. leftover = ", leftover, ", change = ", change)
 
-            if leftover == 0:           # No need to dive into recursion
-                tree.append(change)
-
             if leftover == coins[-1]:   # No need to dive into recursion
                 change.append(leftover)
-                tree.append(change)
-            else:
+            elif leftover != 0:
                 coins1 = copy.copy(coins)
 
-                subtree = build_money_change_tree(tree, leftover, coins1)
+                subtree = build_money_change_tree(leftover, coins1)
 
                 print("subtree = ", subtree)
-
+                
                 change.extend(subtree)
-                tree.append(change)
 
-                print("5. tree = ", tree)
+            tree.append(change)
+
+            print("5. tree = ", tree)
 
     return tree
 
@@ -67,12 +65,47 @@ def build_money_change_tree(tree, money, coins):
 
 if __name__ == '__main__':
 
-    tree = []
-    coins = [2, 1]
-    money = 5
+    # money = 5
+    # coins = [2, 1]
 
-    tree = build_money_change_tree(tree, money, coins)
+    # tree = build_money_change_tree(money, coins)
 
+    # print("tree = ", tree)
+
+    # print("\n==========================================\n")
+
+    # money = 6
+    # coins = [2, 1]
+
+    # tree = build_money_change_tree(money, coins)
+
+    # print("tree = ", tree)
+
+    # print("\n==========================================\n")
+
+    # money = 6
+    # coins = [3, 2, 1]
+
+    # tree = build_money_change_tree(money, coins)
+
+    # print("tree = ", tree)
+
+    # print("\n==========================================\n")
+
+    money = 10
+    coins = [5, 3, 2, 1]
+
+    coins1 = copy.copy(coins)  # Backup  
+    
+    tree = build_money_change_tree(money, coins)
+    
+    print("==========================================\n")
+
+    print("money = ", money, ", coins = ", coins1)
+    print()
+    print("tree = ")
+    for i in range(len(tree)):
+        print("  ", tree[i])
 
 
 
