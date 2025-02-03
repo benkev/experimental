@@ -17,10 +17,15 @@ Examples:
 '''
 
 # from pylab import *
-import copy
+import sys, copy
 
 
 def build_money_change_tree(money, coins):
+
+    if len(coins) == 0:
+        print("Error: the coins list is empty.")
+        return []
+
     
 #    print("1. money = ", money, ", coins = ", coins)
 
@@ -29,7 +34,7 @@ def build_money_change_tree(money, coins):
     while True:
         coin = coins.pop(0)   # Extract the biggest coin from the list
         niter = money//coin
-#        print("2. coin = ", coin, ", niter = ", niter)
+#        print("2. coin = ", coin, ", niter = ", niter, ", coins = ", coins)
 
         if len(coins) == 0:
             tree.append([coin for n in range(niter)])
@@ -64,16 +69,31 @@ def build_money_change_tree(money, coins):
 #      Create a 1D-list xchg with all exchanges from tree.
 #
 
-def exchanges_from_tree(tree, xcgs):
-    
+def get_exchange(tree, xcgs):
     n_elem = len(tree)
-    for i in range(n_elem):
-        elem = tree[i]
-        if isinstance(elem, list):
-            exchanges_from_tree(elem, xcgs)
-            xcgs.extend(xcg)
-        else:
-            xcgs.append(elem)
+    cut1 = []
+    ints_only = True
+    for ie in range(n_elem):
+        elem = tree[ie]
+        if isinstance(elem, int):
+            cut1.append(elem)
+        elif isinstance(elem, list):
+            ints_only = False
+            cut2 = get_exchange(elem, xcgs)
+    if ints_only:
+        pass        # cut1 is a tree leaf. One exchange is completed.
+        
+            
+    
+def exchanges_from_tree(list_of_trees):
+
+    xcgs = []  # List of exchange lists
+    
+    n_trees = len(list_of_trees)
+    for i in range(n_trees):
+        tree = list_of_trees[i]
+        get_exchange(tree, xcgs)
+        xcgs.extend(xcgs)
 
     return
 
@@ -103,6 +123,7 @@ if __name__ == '__main__':
 
     # money = 6
     # coins = [3, 2, 1]
+    # coins1 = copy.copy(coins)  # Backup  
 
     # tree = build_money_change_tree(money, coins)
 
@@ -110,8 +131,13 @@ if __name__ == '__main__':
 
     # print("\n==========================================\n")
 
+    # money = 10
+    # coins = [5, 2, 1]
+#    coins = [5, 3, 2, 1]
+
     money = 20
     coins = [10, 5, 3, 2, 1]
+
     # money = 100
     # coins = [50, 20, 10, 5, 2, 1]
 
