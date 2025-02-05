@@ -65,37 +65,48 @@ def build_money_change_tree(money, coins):
 
 
 #
-# exchanges_from_tree(tree, xcgs):
+# exchanges_from_tree(tree, exchanges):
 #      Create a 1D-list xchg with all exchanges from tree.
 #
 
-def get_exchange(tree, xcgs):
+#
+# Recursive traversal of the exchange tree
+#
+# exchanges: 1D list of the exchanges extracted from the tree
+# xchg:      a single accumulated exchange as a tree branch 
+#
+def get_exchange(tree, exchanges, xchg):
     n_elem = len(tree)
-    cut1 = []
     ints_only = True
+    xchg1 = copy.copy(xchg)  # Backup of a (possibly) incomplete branch
     for ie in range(n_elem):
         elem = tree[ie]
         if isinstance(elem, int):
-            cut1.append(elem)
+            xchg.append(elem)
         elif isinstance(elem, list):
             ints_only = False
-            cut2 = get_exchange(elem, xcgs)
-    if ints_only:
-        pass        # cut1 is a tree leaf. One exchange is completed.
+            break
+
+        if ints_only: # Another branch ready - add it to exchanges
+            exchanges.append(xchg)   # Add it to the result, keeping xchg safe
+            return
+        else:         # Parse the elem subtree
+            xchg = copy.copy(xchg1)  # Restore the incomplete branch
+            get_exchange(elem, exchanges, xchg)
         
             
     
-def exchanges_from_tree(list_of_trees):
+def exchanges_from_trees(list_of_trees):
 
-    xcgs = []  # List of exchange lists
+    exchanges = []  # List of exchange lists
     
     n_trees = len(list_of_trees)
     for i in range(n_trees):
         tree = list_of_trees[i]
-        get_exchange(tree, xcgs)
-        xcgs.extend(xcgs)
+        xchg = []  # A single exchange
+        get_exchange(tree, exchanges, xchg)
 
-    return
+    return exchanges
 
 
 
@@ -106,18 +117,18 @@ if __name__ == '__main__':
     # money = 5
     # coins = [2, 1]
 
-    # tree = build_money_change_tree(money, coins)
+    # list_of_trees = build_money_change_tree(money, coins)
 
-    # print("tree = ", tree)
+    # print("list_of_trees = ", list_of_trees)
 
     # print("\n==========================================\n")
 
     # money = 6
     # coins = [2, 1]
 
-    # tree = build_money_change_tree(money, coins)
+    # list_of_trees = build_money_change_tree(money, coins)
 
-    # print("tree = ", tree)
+    # print("list_of_trees = ", list_of_trees)
 
     # print("\n==========================================\n")
 
@@ -125,38 +136,38 @@ if __name__ == '__main__':
     # coins = [3, 2, 1]
     # coins1 = copy.copy(coins)  # Backup  
 
-    # tree = build_money_change_tree(money, coins)
+    # list_of_trees = build_money_change_tree(money, coins)
 
-    # print("tree = ", tree)
+    # print("list_of_trees = ", list_of_trees)
 
     # print("\n==========================================\n")
 
-    # money = 10
+    money = 10
     # coins = [5, 2, 1]
-#    coins = [5, 3, 2, 1]
+    coins = [5, 3, 2, 1]
 
-    money = 20
-    coins = [10, 5, 3, 2, 1]
+    # money = 20
+    # coins = [10, 5, 3, 2, 1]
 
     # money = 100
     # coins = [50, 20, 10, 5, 2, 1]
 
     coins1 = copy.copy(coins)  # Backup  
     
-    tree = build_money_change_tree(money, coins)
+    list_of_trees = build_money_change_tree(money, coins)
     
 #    print("==========================================\n")
 
     print("money = ", money, ", coins = ", coins1)
     print()
-    print("tree = ")
-    for i in range(len(tree)):
-        print("  ", tree[i])
+    print("list_of_trees = ")
+    for i in range(len(list_of_trees)):
+        print("  ", list_of_trees[i])
         print()
 
-
-    xcgs = []
-
+        
+    xchg = []
+    exchanges = exchanges_from_trees(list_of_trees)
 
 
 
