@@ -69,42 +69,65 @@ def build_money_change_tree(money, coins):
 #      Create a 1D-list xchg with all exchanges from tree.
 #
 
+            
+    
 #
 # Recursive traversal of the exchange tree
 #
-# exchanges: 1D list of the exchanges extracted from the tree
-# xchg:      a single accumulated exchange as a tree branch 
-#
-def get_exchange(tree, exchanges, xchg):
-    n_elem = len(tree)
-    ints_only = True
-    xchg1 = copy.copy(xchg)  # Backup of a (possibly) incomplete branch
-    for ie in range(n_elem):
-        elem = tree[ie]
-        if isinstance(elem, int):
-            xchg.append(elem)
-        elif isinstance(elem, list):
-            ints_only = False
-            break
-
-        if ints_only: # Another branch ready - add it to exchanges
-            exchanges.append(xchg)   # Add it to the result, keeping xchg safe
-            return
-        else:         # Parse the elem subtree
-            xchg = copy.copy(xchg1)  # Restore the incomplete branch
-            get_exchange(elem, exchanges, xchg)
-        
-            
-    
 def exchanges_from_trees(list_of_trees):
 
-    exchanges = []  # List of exchange lists
+    exchanges = []  # 1D list of the exchanges extracted from the tree
+    xchg = []       # A single accumulated exchange as a tree branch 
+
+    def get_exchange(tree):
+        nonlocal exchanges, xchg, xchg1
+        n_elem = len(tree)
+        print("\nn_elem = ", n_elem, ", xchg = ", xchg)
+        ints_only = True
+        xchg1 = copy.copy(xchg)  # Backup of a (possibly) incomplete branch
+        for ie in range(n_elem):
+            print("\nfor ie; ie = ", ie)
+            elem = tree[ie]
+
+            print("isinstance(elem, list) = ", isinstance(elem, list))
+            print("isinstance(elem, int) = ", isinstance(elem, int))
+            print("1. exchanges = ", exchanges)
+
+            if isinstance(elem, int):
+                xchg.append(elem)
+            else:
+                print("LIST: elem = ", elem, ", xchg = ", xchg)
+                ints_only = False
+                
+                break    !!! for ie Loop MUST continue!
+            
+            
+            print("ie = ", ie, ", elem = ", elem, ", xchg1 = ", xchg1,
+                  ", xchg = ", xchg)
+            print("2. exchanges = ", exchanges)
+
+        !!! This MUST be inside for ie LOOP: !!!!!!!!!!!!!!
+        if ints_only: # Another branch ready - add it to exchanges
+            exchanges.append(xchg)   # Add it to the result, keeping xchg safe
+
+            print("3. exchanges = ", exchanges)
+
+            return
+        else:         # Parse the elem subtree
+            #xchg = copy.copy(xchg1)  # Restore the incomplete branch
+            get_exchange(elem)
+
+            
+    exchanges = []  # 1D list of the exchanges extracted from the tree
+    xchg = []       # A single accumulated exchange as a tree branch 
+    xchg1 = []      # Backup of a (possibly) incomplete branch
     
     n_trees = len(list_of_trees)
-    for i in range(n_trees):
-        tree = list_of_trees[i]
+    for i_tree in range(n_trees):
+        tree = list_of_trees[i_tree]
         xchg = []  # A single exchange
-        get_exchange(tree, exchanges, xchg)
+        print("\ni_tree = ", i_tree)
+        get_exchange(tree)
 
     return exchanges
 
@@ -166,7 +189,6 @@ if __name__ == '__main__':
         print()
 
         
-    xchg = []
     exchanges = exchanges_from_trees(list_of_trees)
 
 
