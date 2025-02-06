@@ -78,9 +78,10 @@ def exchanges_from_trees(list_of_trees):
 
     exchanges = []  # 1D list of the exchanges extracted from the tree
     xchg = []       # A single accumulated exchange as a tree branch 
+    i_xchg = 0      # The branch location to delete the tail from
 
     def get_exchange(tree):
-        nonlocal exchanges, xchg, xchg1
+        nonlocal exchanges, xchg, i_xchg
         n_elem = len(tree)
         print("\nn_elem = ", n_elem, ", xchg = ", xchg)
         ints_only = True
@@ -89,38 +90,30 @@ def exchanges_from_trees(list_of_trees):
             print("\nfor ie; ie = ", ie)
             elem = tree[ie]
 
-            print("isinstance(elem, list) = ", isinstance(elem, list))
-            print("isinstance(elem, int) = ", isinstance(elem, int))
-            print("1. exchanges = ", exchanges)
-
             if isinstance(elem, int):
                 xchg.append(elem)
             else:
                 print("LIST: elem = ", elem, ", xchg = ", xchg)
                 ints_only = False
-                
-                break    !!! for ie Loop MUST continue!
+                i_xchg = len(xchg)  # Remember the location in the branch
+                get_exchange(elem)
+                del xchg[i_xchg:]   # Return to the previous branch state
             
-            
-            print("ie = ", ie, ", elem = ", elem, ", xchg1 = ", xchg1,
-                  ", xchg = ", xchg)
             print("2. exchanges = ", exchanges)
 
-        !!! This MUST be inside for ie LOOP: !!!!!!!!!!!!!!
+
         if ints_only: # Another branch ready - add it to exchanges
             exchanges.append(xchg)   # Add it to the result, keeping xchg safe
 
             print("3. exchanges = ", exchanges)
 
-            return
-        else:         # Parse the elem subtree
-            #xchg = copy.copy(xchg1)  # Restore the incomplete branch
-            get_exchange(elem)
+        return
 
             
     exchanges = []  # 1D list of the exchanges extracted from the tree
     xchg = []       # A single accumulated exchange as a tree branch 
-    xchg1 = []      # Backup of a (possibly) incomplete branch
+    #xchg1 = []      # Backup of a (possibly) incomplete branch
+    i_xchg = 0      # The branch location to delete the tail from
     
     n_trees = len(list_of_trees)
     for i_tree in range(n_trees):
