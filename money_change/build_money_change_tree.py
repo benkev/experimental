@@ -18,6 +18,7 @@ Examples:
 
 # from pylab import *
 import sys, copy
+import numpy as np
 
 
 def build_money_change_tree(money, coins):
@@ -65,61 +66,79 @@ def build_money_change_tree(money, coins):
 
 
 #
-# exchanges_from_tree(tree, exchanges):
-#      Create a 1D-list xchg with all exchanges from tree.
+# exchanges_from_tree(list_of_trees):
 #
-
-            
-    
-#
-# Recursive traversal of the exchange tree
+#      Returns a 1D-list with all exchanges from the list_of_trees.
 #
 def exchanges_from_trees(list_of_trees):
 
-    exchanges = []  # 1D list of the exchanges extracted from the tree
-    xchg = []       # A single accumulated exchange as a tree branch 
-    i_xchg = 0      # The branch location to delete the tail from
+    # exchanges:  # 1D list of the exchanges extracted from the tree
+    # xchg:       # A single accumulated exchange as a tree branch 
+    # i_depth:    # Depth of recursion (for debugging only)
 
+#
+# Recursive traversal of the exchange tree
+#
     def get_exchange(tree):
-        nonlocal exchanges, xchg, i_xchg
+        
+        nonlocal exchanges, xchg, i_depth
+
+        i_depth += 1  # Depth of recursion (for debugging only)
+
+        i_xchg = len(xchg) # The location in thee branch to cut the tail from
+        
         n_elem = len(tree)
-        print("\nn_elem = ", n_elem, ", xchg = ", xchg)
+        
+#        print()
+#        print(i_depth,": Entry: n_elem = ", n_elem, ", tree = ", tree,
+#              ", xchg = ",xchg)
+#        print(i_depth,": 1. exchanges = ", exchanges)
+
         ints_only = True
-        xchg1 = copy.copy(xchg)  # Backup of a (possibly) incomplete branch
+
         for ie in range(n_elem):
-            print("\nfor ie; ie = ", ie)
+            
+#            print()
+#            print(i_depth,": for ie; ie = ", ie)
+
             elem = tree[ie]
 
             if isinstance(elem, int):
                 xchg.append(elem)
             else:
-                print("LIST: elem = ", elem, ", xchg = ", xchg)
+#                print(i_depth,": LIST: elem = ", elem, ", xchg = ", xchg)
                 ints_only = False
-                i_xchg = len(xchg)  # Remember the location in the branch
+
                 get_exchange(elem)
-                del xchg[i_xchg:]   # Return to the previous branch state
+
             
-            print("2. exchanges = ", exchanges)
+#            print(i_depth,": 2. exchanges = ", exchanges)
 
 
         if ints_only: # Another branch ready - add it to exchanges
-            exchanges.append(xchg)   # Add it to the result, keeping xchg safe
+            # Add its copy to the result, keeping xchg in exchanges safe
+            exchanges.append(copy.copy(xchg))
 
-            print("3. exchanges = ", exchanges)
+#            print(i_depth,": 3. exchanges = ", exchanges)
+            
+        del xchg[i_xchg:]   # Return to the previous branch state
+
+#        i_depth -= 1        # Depth of recursion (for debugging only)
 
         return
 
             
     exchanges = []  # 1D list of the exchanges extracted from the tree
     xchg = []       # A single accumulated exchange as a tree branch 
-    #xchg1 = []      # Backup of a (possibly) incomplete branch
-    i_xchg = 0      # The branch location to delete the tail from
+    # i_xchg = 0      # The location in thee branch to delete the tail from
+    i_depth = 0     # Depth of recursion
+
     
     n_trees = len(list_of_trees)
     for i_tree in range(n_trees):
         tree = list_of_trees[i_tree]
         xchg = []  # A single exchange
-        print("\ni_tree = ", i_tree)
+#        print("\ni_tree = ", i_tree)
         get_exchange(tree)
 
     return exchanges
@@ -159,8 +178,10 @@ if __name__ == '__main__':
     # print("\n==========================================\n")
 
     money = 10
+    coins = [5, 3]
+    # money = 10
     # coins = [5, 2, 1]
-    coins = [5, 3, 2, 1]
+    # coins = [5, 3, 2, 1]
 
     # money = 20
     # coins = [10, 5, 3, 2, 1]
@@ -184,6 +205,15 @@ if __name__ == '__main__':
         
     exchanges = exchanges_from_trees(list_of_trees)
 
+    n_exchanges = len(exchanges)
+    
+    print()
+    print("exchanges = \n")
+    for i in range(len(exchanges)):
+        print(sum(exchanges[i]), exchanges[i])
+
+    print()
+    print("Total of exchanges: ", n_exchanges)
 
 
 
