@@ -177,14 +177,14 @@ if __name__ == '__main__':
 
     # print("\n==========================================\n")
 
-    money = 10
-    coins = [5, 3]
+    #money = 10
+    # coins = [5, 3]
     # money = 10
-    # coins = [5, 2, 1]
+    #coins = [5, 2, 1]
     # coins = [5, 3, 2, 1]
 
-    # money = 20
-    # coins = [10, 5, 3, 2, 1]
+    money = 20
+    coins = [10, 5, 3, 2, 1]
 
     # money = 100
     # coins = [50, 20, 10, 5, 2, 1]
