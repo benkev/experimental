@@ -1,0 +1,2 @@
+#!/bin/sh
+mediainfo --Inform="Video;%Width%x%Height% aspr %DisplayAspectRatio%" $1
