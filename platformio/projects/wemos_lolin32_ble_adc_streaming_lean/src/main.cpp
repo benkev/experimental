@@ -1,3 +1,10 @@
+//
+// ADC1 (pin 36) 12-bit data streaming via BLE
+//
+// With recovery after disconnection, and smooth reconnection
+//
+//
+
 #include <Arduino.h>
 #define CONFIG_BT_NIMBLE_NVS_PERSIST 0
 #include <NimBLEDevice.h>
@@ -26,12 +33,14 @@ class ServerCallbacks : public NimBLEServerCallbacks {
 
 // GATT-level callbacks for subscription
 class CharacteristicCallbacks : public NimBLECharacteristicCallbacks {
-  void onSubscribe(NimBLECharacteristic* pCharacteristic, NimBLEConnInfo& connInfo, uint16_t subValue) {
+  void onSubscribe(NimBLECharacteristic* pCharacteristic,
+                   NimBLEConnInfo& connInfo, uint16_t subValue) {
     Serial.println("Client subscribed to notifications");
     subscribed = true;
   }
 
-  void onUnsubscribe(NimBLECharacteristic* pCharacteristic, NimBLEConnInfo& connInfo) {
+  void onUnsubscribe(NimBLECharacteristic* pCharacteristic,
+                     NimBLEConnInfo& connInfo) {
     Serial.println("Client unsubscribed");
     subscribed = false;
   }
@@ -70,8 +79,9 @@ void loop() {
   static uint32_t lastCheck = 0;
   if (millis() - lastCheck > 1000) {
     lastCheck = millis();
-    // auto connList = NimBLEDevice::getServer()->getConnectedDevices();
-    // if (connList.empty()) {
+    
+    // Detect whether the ESP32 is still connected to any client after
+    // a Ctrl+C on the PC
     if (NimBLEDevice::getServer()->getConnectedCount() == 0) {
       if (subscribed) {
         Serial.println("No clients connected but still marked subscribed." \
